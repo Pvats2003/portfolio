@@ -93,6 +93,11 @@ export const projects: ProjectData[] = [
           'APPLY — the human submits, with the system assisting where safe to do so',
         ],
         mockup: 'career-os',
+        evidenceLabel: 'Prototype',
+        evidenceNotes: [
+          'Board layout mirrors the five pipeline stages above — each card is one job listing moving through the system.',
+          'The highlighted REVIEW column shows a listing routed to a human because salary was unverified — an actual hard-stop, not a hypothetical.',
+        ],
       },
       {
         id: 'architecture',
@@ -254,6 +259,11 @@ export const projects: ProjectData[] = [
           { value: '30s', label: 'Dashboard poll interval' },
         ],
         mockup: 'command-center',
+        evidenceLabel: 'Internal operations tool',
+        evidenceNotes: [
+          'Reflects the real structure of the workbook and dashboard — stat tiles, sheet rows, and a live-polling indicator.',
+          'Specific numbers shown are illustrative placeholders, not exported operations data.',
+        ],
       },
       {
         id: 'ocr-extractor',
@@ -361,6 +371,10 @@ export const projects: ProjectData[] = [
           'OpsIntel parses incoming field updates, extracts the operationally relevant fields, and writes them into a structured store that a live dashboard reads from in real time over WebSocket. The rest of the ops team gets a queryable view of the field instead of a scrollback of chat messages.',
         ],
         mockup: 'opsintel',
+        evidenceLabel: 'Internal operations tool',
+        evidenceNotes: [
+          'Shows the transformation OpsIntel performs: an unstructured WhatsApp message becomes a structured, queryable record.',
+        ],
       },
       {
         id: 'build',
@@ -444,6 +458,8 @@ export const projects: ProjectData[] = [
         ],
         metrics: [{ value: '1 week', label: 'Live MVP shipped' }],
         mockup: 'karavali',
+        evidenceLabel: 'Built MVP',
+        evidenceNotes: ['Represents the mobile-first card layout described in the build — not the actual shipped UI.'],
       },
       {
         id: 'status',
@@ -506,6 +522,10 @@ export const projects: ProjectData[] = [
           ],
         },
         mockup: 'audit-ai',
+        evidenceLabel: 'Prototype',
+        evidenceNotes: [
+          'Maps directly to the review pipeline above: document in, rule engine + LLM analysis, flagged findings, structured report out.',
+        ],
       },
       {
         id: 'personas',

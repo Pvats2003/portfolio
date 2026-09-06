@@ -1,6 +1,6 @@
 import { CaseStudySection as CaseStudySectionData } from '@/lib/types';
 import { ArchitectureDiagram } from '@/components/case-studies/ArchitectureDiagram';
-import { ConceptualUI } from '@/components/case-studies/ConceptualUI';
+import { VisualEvidence } from '@/components/case-studies/VisualEvidence';
 import { MetricStrip } from '@/components/ui/Metric';
 
 export function CaseStudySection({ section }: { section: CaseStudySectionData }) {
@@ -38,7 +38,14 @@ export function CaseStudySection({ section }: { section: CaseStudySectionData })
             </ul>
           )}
 
-          {section.mockup && <ConceptualUI kind={section.mockup} />}
+          {section.mockup && (
+            <VisualEvidence
+              kind={section.mockup}
+              images={section.evidenceImages}
+              label={section.evidenceLabel}
+              notes={section.evidenceNotes}
+            />
+          )}
 
           {section.diagram && <ArchitectureDiagram data={section.diagram} />}
 

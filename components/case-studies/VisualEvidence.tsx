@@ -1,4 +1,9 @@
-import { MockupKind } from '@/lib/types';
+'use client';
+
+import { useState } from 'react';
+import Image from 'next/image';
+import { Expand, X } from 'lucide-react';
+import { EvidenceImage, EvidenceLabel, MockupKind } from '@/lib/types';
 
 function Chrome({ children }: { children: React.ReactNode }) {
   return (
@@ -174,7 +179,7 @@ function AuditAIMockup() {
   );
 }
 
-const MOCKUPS: Record<MockupKind, () => React.JSX.Element> = {
+const CONCEPTUAL_MOCKUPS: Record<MockupKind, () => React.JSX.Element> = {
   'career-os': CareerOSMockup,
   'command-center': CommandCenterMockup,
   opsintel: OpsIntelMockup,
@@ -182,14 +187,103 @@ const MOCKUPS: Record<MockupKind, () => React.JSX.Element> = {
   'audit-ai': AuditAIMockup,
 };
 
-export function ConceptualUI({ kind }: { kind: MockupKind }) {
-  const Component = MOCKUPS[kind];
+function Lightbox({ image, onClose }: { image: EvidenceImage; onClose: () => void }) {
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={image.alt}
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-bg/90 p-6 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Close"
+        className="absolute right-6 top-6 rounded border border-border p-2 text-ink transition-colors hover:border-accent hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+      >
+        <X className="h-5 w-5" />
+      </button>
+      <div
+        className="relative rounded-lg border border-border-strong"
+        style={{ width: '90vw', height: '85vh' }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Image src={image.src} alt={image.alt} fill sizes="90vw" className="rounded-lg object-contain" />
+      </div>
+    </div>
+  );
+}
+
+interface VisualEvidenceProps {
+  /** Fallback abstract wireframe kind, used whenever no real images are supplied. */
+  kind: MockupKind;
+  /** Real product screenshots. When present, these render instead of the conceptual mockup. */
+  images?: EvidenceImage[];
+  /** Badge shown only alongside real images — never applied to conceptual visualizations. */
+  label?: EvidenceLabel;
+  /** Short explanatory lines placed under the visualization. */
+  notes?: string[];
+}
+
+export function VisualEvidence({ kind, images, label, notes }: VisualEvidenceProps) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const hasRealImages = Boolean(images && images.length > 0);
+
   return (
     <figure className="not-prose">
-      <Component />
-      <figcaption className="mt-2.5 font-mono text-[11px] text-faint">
-        Conceptual visualization — not a live product screenshot.
-      </figcaption>
+      {hasRealImages ? (
+        <div>
+          <div className="mb-2.5 flex items-center gap-2">
+            <span className="rounded border border-accent/40 bg-accent/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-accent">
+              {label ?? 'Live product'}
+            </span>
+          </div>
+          <div className={`grid gap-3 ${images!.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+            {images!.map((image, i) => (
+              <button
+                key={image.src}
+                type="button"
+                onClick={() => setLightboxIndex(i)}
+                className="group relative overflow-hidden rounded-lg border border-border focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={960}
+                  height={600}
+                  className="h-auto w-full object-cover"
+                />
+                <span className="absolute right-2 top-2 rounded bg-bg/80 p-1.5 text-ink opacity-0 transition-opacity group-hover:opacity-100">
+                  <Expand className="h-3.5 w-3.5" />
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <>
+          {CONCEPTUAL_MOCKUPS[kind]()}
+          <figcaption className="mt-2.5 font-mono text-[11px] text-faint">
+            Conceptual visualization — not a live product screenshot.
+          </figcaption>
+        </>
+      )}
+
+      {notes && notes.length > 0 && (
+        <ul className="mt-3 space-y-1.5">
+          {notes.map((note) => (
+            <li key={note} className="flex gap-2 text-xs leading-relaxed text-faint">
+              <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-faint" />
+              <span>{note}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {lightboxIndex !== null && images && (
+        <Lightbox image={images[lightboxIndex]} onClose={() => setLightboxIndex(null)} />
+      )}
     </figure>
   );
 }

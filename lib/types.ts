@@ -22,6 +22,13 @@ export interface ArchitectureDiagramData {
 
 export type MockupKind = 'career-os' | 'command-center' | 'opsintel' | 'karavali' | 'audit-ai';
 
+export type EvidenceLabel = 'Live product' | 'Built MVP' | 'Internal operations tool' | 'Prototype';
+
+export interface EvidenceImage {
+  src: string;
+  alt: string;
+}
+
 export interface CaseStudySection {
   id: string;
   heading: string;
@@ -31,7 +38,17 @@ export interface CaseStudySection {
   diagram?: ArchitectureDiagramData;
   metrics?: MetricItem[];
   quote?: string;
+  /** Fallback abstract wireframe rendered when no real screenshots exist yet. */
   mockup?: MockupKind;
+  /** Short lines explaining what the visualization (real or conceptual) represents. */
+  evidenceNotes?: string[];
+  /**
+   * Real product screenshots, when available. Empty/omitted everywhere today —
+   * the component falls back to the labeled conceptual visualization.
+   */
+  evidenceImages?: EvidenceImage[];
+  /** Only rendered when evidenceImages is non-empty — never applied to conceptual visuals. */
+  evidenceLabel?: EvidenceLabel;
 }
 
 export interface ProjectData {
