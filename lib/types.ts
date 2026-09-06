@@ -64,6 +64,7 @@ export interface ProjectData {
   pipeline?: string[];
   principle?: string;
   tagline?: string;
+  liveUrl?: string;
   technologies: string[];
   metrics: MetricItem[];
   tier: ProjectTier;

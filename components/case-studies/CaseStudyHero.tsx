@@ -4,6 +4,7 @@ import { ProjectData } from '@/lib/types';
 import { Tag } from '@/components/ui/Tag';
 import { MetricStrip } from '@/components/ui/Metric';
 import { RoleBlock } from '@/components/case-studies/RoleBlock';
+import { Button } from '@/components/ui/Button';
 
 export function CaseStudyHero({ project }: { project: ProjectData }) {
   return (
@@ -26,6 +27,12 @@ export function CaseStudyHero({ project }: { project: ProjectData }) {
         <h1 className="mt-6 text-display-lg font-semibold tracking-tight text-ink">{project.title}</h1>
         <p className="mt-4 max-w-2xl text-xl text-muted">{project.subtitle}</p>
         <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">{project.description}</p>
+
+        {project.liveUrl && (
+          <Button href={project.liveUrl} variant="secondary" external showArrow className="mt-6">
+            View live
+          </Button>
+        )}
 
         <RoleBlock project={project} />
 

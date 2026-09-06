@@ -414,6 +414,7 @@ export const projects: ProjectData[] = [
     ],
     description:
       'Conventional travel products don’t capture authentic, community-driven local experiences. Karavali is a mobile-first discovery product built around coastal Karnataka.',
+    liveUrl: 'https://karavali.base44.app',
     technologies: ['React', 'Supabase', 'AI recommendations'],
     metrics: [{ value: '1 week', label: 'From start to live MVP' }],
     tier: 2,
