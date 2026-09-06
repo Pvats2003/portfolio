@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Expand, X } from 'lucide-react';
 import { EvidenceImage, EvidenceLabel, MockupKind } from '@/lib/types';
@@ -188,6 +188,14 @@ const CONCEPTUAL_MOCKUPS: Record<MockupKind, () => React.JSX.Element> = {
 };
 
 function Lightbox({ image, onClose }: { image: EvidenceImage; onClose: () => void }) {
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [onClose]);
+
   return (
     <div
       role="dialog"
@@ -252,7 +260,7 @@ export function VisualEvidence({ kind, images, label, notes }: VisualEvidencePro
                   alt={image.alt}
                   width={960}
                   height={600}
-                  className="h-auto w-full object-cover"
+                  className="h-auto w-full bg-bg object-contain"
                 />
                 <span className="absolute right-2 top-2 rounded bg-bg/80 p-1.5 text-ink opacity-0 transition-opacity group-hover:opacity-100">
                   <Expand className="h-3.5 w-3.5" />
