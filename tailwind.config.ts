@@ -12,9 +12,8 @@ const config: Config = {
         'border-strong': '#2e3234',
         ink: '#f2f0ea',
         muted: '#9a9d9f',
-        faint: '#6b6e70',
+        faint: '#84878a',
         accent: '#c8ff4d',
-        'accent-dim': '#8fb838',
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],

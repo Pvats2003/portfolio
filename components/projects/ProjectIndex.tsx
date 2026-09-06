@@ -1,5 +1,6 @@
 import { tier1Projects, tier2Projects, tier3Projects } from '@/data/projects';
 import { SectionHeader } from '@/components/ui/SectionHeader';
+import { FlagshipProject } from '@/components/projects/FlagshipProject';
 import { FeaturedProject } from '@/components/projects/FeaturedProject';
 import { ProjectCard } from '@/components/projects/ProjectCard';
 
@@ -12,9 +13,9 @@ export function ProjectIndex() {
         <SectionHeader kicker="Selected work" title="Products, systems, and experiments I’ve built." />
 
         <div className="mt-14 space-y-6">
-          {careerOS && <FeaturedProject project={careerOS} size="xl" />}
+          {careerOS && <FlagshipProject project={careerOS} />}
           {restTier1.map((project) => (
-            <FeaturedProject key={project.id} project={project} size="lg" />
+            <FeaturedProject key={project.id} project={project} />
           ))}
         </div>
 

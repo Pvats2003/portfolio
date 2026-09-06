@@ -2,7 +2,7 @@ import { howIWork } from '@/data/site';
 
 export function HowIWork() {
   return (
-    <section className="border-b border-border py-24 sm:py-32">
+    <section id="how-i-work" className="scroll-mt-20 border-b border-border py-24 sm:py-32">
       <div className="mx-auto max-w-content px-6 sm:px-10">
         <h2 className="max-w-2xl text-display-md font-semibold text-ink">I work at the intersection.</h2>
 

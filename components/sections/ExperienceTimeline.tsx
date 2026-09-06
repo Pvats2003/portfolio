@@ -17,7 +17,11 @@ export function ExperienceTimeline() {
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-ink">{item.title}</h3>
-                <p className="mt-1 text-base text-muted">{item.org}</p>
+                <p className="mt-1 text-base text-muted">
+                  {item.org}
+                  {item.location ? ` — ${item.location}` : ''}
+                  {item.industry ? ` · ${item.industry}` : ''}
+                </p>
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {item.focus.map((f) => (
                     <li key={f} className="rounded border border-border px-2.5 py-1 font-mono text-xs text-muted">

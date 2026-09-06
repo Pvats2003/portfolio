@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react';
 import { ProjectData } from '@/lib/types';
 import { Tag } from '@/components/ui/Tag';
 import { MetricStrip } from '@/components/ui/Metric';
-import { TechStack } from '@/components/ui/TechStack';
+import { RoleBlock } from '@/components/case-studies/RoleBlock';
 
 export function CaseStudyHero({ project }: { project: ProjectData }) {
   return (
@@ -27,14 +27,7 @@ export function CaseStudyHero({ project }: { project: ProjectData }) {
         <p className="mt-4 max-w-2xl text-xl text-muted">{project.subtitle}</p>
         <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">{project.description}</p>
 
-        <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-border pt-6">
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-wider text-faint">Role</p>
-            <p className="mt-1 text-sm text-ink">{project.role}</p>
-          </div>
-        </div>
-
-        <TechStack items={project.technologies} className="mt-6" />
+        <RoleBlock project={project} />
 
         {project.metrics.length > 0 && <MetricStrip metrics={project.metrics} className="mt-12" />}
       </div>

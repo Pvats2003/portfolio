@@ -4,7 +4,7 @@ import { ProjectData } from '@/lib/types';
 import { Tag } from '@/components/ui/Tag';
 import { TechStack } from '@/components/ui/TechStack';
 
-export function FeaturedProject({ project, size = 'lg' }: { project: ProjectData; size?: 'xl' | 'lg' }) {
+export function FeaturedProject({ project }: { project: ProjectData }) {
   const href = project.caseStudyRoute ?? '#';
 
   return (
@@ -18,15 +18,13 @@ export function FeaturedProject({ project, size = 'lg' }: { project: ProjectData
         <Tag>{project.status}</Tag>
       </div>
 
-      <div className="mt-6 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+      {project.tagline && (
+        <p className="mt-5 font-mono text-xs uppercase tracking-[0.2em] text-accent">{project.tagline}</p>
+      )}
+
+      <div className="mt-3 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
         <div className="max-w-2xl">
-          <h3
-            className={`font-semibold tracking-tight text-ink ${
-              size === 'xl' ? 'text-3xl sm:text-5xl' : 'text-2xl sm:text-4xl'
-            }`}
-          >
-            {project.title}
-          </h3>
+          <h3 className="text-2xl font-semibold tracking-tight text-ink sm:text-4xl">{project.title}</h3>
           <p className="mt-3 text-lg text-muted">{project.subtitle}</p>
         </div>
         <span className="flex shrink-0 items-center gap-2 font-mono text-xs uppercase tracking-wider text-ink transition-colors group-hover:text-accent">

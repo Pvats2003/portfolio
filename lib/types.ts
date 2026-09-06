@@ -20,6 +20,8 @@ export interface ArchitectureDiagramData {
   annotations?: string[];
 }
 
+export type MockupKind = 'career-os' | 'command-center' | 'opsintel' | 'karavali' | 'audit-ai';
+
 export interface CaseStudySection {
   id: string;
   heading: string;
@@ -29,6 +31,7 @@ export interface CaseStudySection {
   diagram?: ArchitectureDiagramData;
   metrics?: MetricItem[];
   quote?: string;
+  mockup?: MockupKind;
 }
 
 export interface ProjectData {
@@ -39,7 +42,11 @@ export interface ProjectData {
   category: string;
   status: ProjectStatus;
   role: string;
+  whatIOwned: string[];
   description: string;
+  pipeline?: string[];
+  principle?: string;
+  tagline?: string;
   technologies: string[];
   metrics: MetricItem[];
   tier: ProjectTier;

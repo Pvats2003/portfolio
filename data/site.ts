@@ -8,6 +8,8 @@ export const site = {
     'From robotics data operations to autonomous job-search systems, I work across the full loop — problem discovery, product thinking, system design, building, shipping, and iteration.',
   statement: 'I build systems that turn messy problems into intelligent products.',
   email: 'priyanshu.vats03@gmail.com',
+  phone: '+91-6206624775',
+  location: 'Manipal, KA',
   linkedin: 'https://www.linkedin.com/in/priyanshuvats-5a68aa292',
   linkedinLabel: 'linkedin.com/in/priyanshuvats-5a68aa292',
   status: 'OPEN TO OPPORTUNITIES',
@@ -37,20 +39,6 @@ export const proofPoints = [
   { value: '1 week', label: 'Karavali MVP' },
 ];
 
-export interface BuildStage {
-  index: string;
-  label: string;
-  detail: string;
-}
-
-export const buildStages: BuildStage[] = [
-  { index: '01', label: 'Problem', detail: 'Find the actual problem, not the one that’s easiest to name.' },
-  { index: '02', label: 'System', detail: 'Turn ambiguity into a structure that can be built.' },
-  { index: '03', label: 'Product', detail: 'Decide what it does, for whom, and why it matters.' },
-  { index: '04', label: 'Ship', detail: 'Build it, deploy it, put it in front of reality.' },
-  { index: '05', label: 'Iterate', detail: 'Use what happens next to make it better.' },
-];
-
 export interface HowIWorkStep {
   index: string;
   label: string;
@@ -58,9 +46,9 @@ export interface HowIWorkStep {
 }
 
 export const howIWork: HowIWorkStep[] = [
-  { index: '01', label: 'Discover', detail: 'Find the actual problem.' },
-  { index: '02', label: 'Structure', detail: 'Turn ambiguity into a product / system.' },
+  { index: '01', label: 'Discover', detail: 'Find the actual problem, not the one that’s easiest to name.' },
+  { index: '02', label: 'Structure', detail: 'Turn ambiguity into a product or system that can be built.' },
   { index: '03', label: 'Build', detail: 'Prototype and engineer the solution.' },
-  { index: '04', label: 'Operate', detail: 'Put it into the real world.' },
-  { index: '05', label: 'Iterate', detail: 'Use feedback to improve it.' },
+  { index: '04', label: 'Operate', detail: 'Put it into the real world and own the operation around it.' },
+  { index: '05', label: 'Iterate', detail: 'Use what happens next to make it better.' },
 ];

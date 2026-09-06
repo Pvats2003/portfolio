@@ -12,14 +12,26 @@ export const projects: ProjectData[] = [
     category: 'AI Product · Automation',
     status: 'Building',
     role: 'Solo builder — self-initiated',
+    whatIOwned: [
+      'System architecture, end to end — discovery, matching, generation, review, and submission-assist as separate services',
+      '5 provider adapters (Remotive, Arbeitnow, Adzuna, Greenhouse, Lever) with dedup fingerprinting',
+      'The no-fabrication data model — source, confidence, and verification metadata on every candidate fact',
+      'The trust gate — hard-stop routing for salary, visa, CAPTCHA, and MFA',
+      'Test suite, typing, and schema migrations',
+    ],
     description:
       'Discovers jobs, evaluates fit, generates application materials, and guides applications while keeping humans in control of high-risk decisions.',
+    pipeline: ['Discover', 'Match', 'Generate', 'Review', 'Apply'],
+    principle: 'Automate the work. Never automate trust.',
     technologies: [
       'Python',
+      'FastAPI',
+      'React',
+      'TypeScript',
+      'Tailwind',
       'SQLAlchemy',
       'Pydantic',
-      'Alembic',
-      'LLM matching',
+      'Anthropic API',
       'Remotive',
       'Arbeitnow',
       'Adzuna',
@@ -43,34 +55,35 @@ export const projects: ProjectData[] = [
       {
         id: 'problem',
         heading: 'The problem',
-        kicker: '01',
+        kicker: '01 · Problem',
         body: [
           'A job search is a coordination problem disguised as a writing problem. The same person has to watch a dozen sources for new postings, judge fit against a moving target, produce a tailored resume and cover letter for each one, and track where every application actually stands.',
           'Most tools attack one slice of this — a job board, a resume builder, an autofill extension — and leave the coordination to the human. The result is either a spreadsheet nobody keeps updated, or a browser extension that fires off applications faster than the person can verify what was actually submitted.',
         ],
       },
       {
-        id: 'why-it-matters',
-        heading: 'Why it matters',
-        kicker: '02',
+        id: 'insight',
+        heading: 'The insight',
+        kicker: '02 · Insight',
         body: [
-          'Speed and judgment are usually treated as opposites in this space: automate everything and lose control, or stay manual and lose time. Neither is right. The volume problem (finding and triaging postings) and the judgment problem (deciding what to submit, and how) require different solutions — one is a search and matching problem, the other is a trust problem.',
+          'Speed and judgment get treated as opposites here: automate everything and lose control, or stay manual and lose time. They’re not actually the same problem. Finding and triaging postings is a search-and-matching problem — it can run unattended. Deciding what to submit, and how, is a trust problem — it can’t.',
+          'Automation should compress the distance between "a relevant job exists" and "a strong, reviewed application is ready to send." Not the distance between "a job exists" and "an application has been submitted."',
         ],
       },
       {
-        id: 'insight',
-        heading: 'The insight',
-        kicker: '03',
+        id: 'approach',
+        heading: 'Approach',
+        kicker: '03 · Approach',
         body: [
-          'Automation should compress the distance between "a relevant job exists" and "a strong, reviewed application is ready to send" — not the distance between "a job exists" and "an application has been submitted." Everything up to review can run unattended. Submission cannot.',
+          'Career OS is a pipeline of independent services, not one monolithic tool: discovery, matching, generation, review, and submission-assist each do one job and hand off through a typed schema. That separation is what makes the trust gate enforceable — a listing can only reach submission after it has passed through review, because there is no code path that skips it.',
         ],
       },
       {
         id: 'product',
-        heading: 'The product',
-        kicker: '04',
+        heading: 'What I built',
+        kicker: '04 · Build',
         body: [
-          'Career OS is a pipeline, not a single tool. It pulls postings from multiple sources, scores them against a candidate profile using a mix of deterministic rules and LLM-assisted matching, drafts resume and cover-letter material for the postings worth pursuing, and then hands the whole package to the person for review before anything is submitted.',
+          'A modular, auditable job-search system: five provider adapters with dedup fingerprinting on the discovery side, deterministic filters plus LLM-assisted reasoning for matching, generated resume and cover-letter material per posting, and a phase-gated application layer — structured-ATS submission for sites that support it, browser-automation assistance for the rest — that always ends at a human review gate.',
         ],
         bullets: [
           'DISCOVER — pull new postings from every connected source on a schedule',
@@ -79,20 +92,21 @@ export const projects: ProjectData[] = [
           'REVIEW — surface the package, the score, and the reasoning to the human',
           'APPLY — the human submits, with the system assisting where safe to do so',
         ],
+        mockup: 'career-os',
       },
       {
         id: 'architecture',
         heading: 'Architecture',
-        kicker: '05',
+        kicker: '05 · System',
         diagram: {
           title: 'Pipeline',
           stages: [
             { label: 'JOB SOURCES', detail: 'Remotive · Arbeitnow · Adzuna · Greenhouse · Lever' },
             { label: 'PROVIDER ADAPTERS', detail: 'Normalize each source into one schema' },
-            { label: 'DEDUPLICATION', detail: 'Collapse cross-posted listings' },
+            { label: 'DEDUPLICATION', detail: 'Fingerprint and collapse cross-posted listings' },
             { label: 'JOB MATCHING', detail: 'Deterministic filters + LLM-assisted scoring' },
             { label: 'RESUME / COVER LETTER', detail: 'Generated per-posting, from a structured profile' },
-            { label: 'APPLICATION ASSISTANCE', detail: 'Pre-fills and prepares, does not submit' },
+            { label: 'APPLICATION ASSISTANCE', detail: 'Structured-ATS or browser-assisted — never auto-submits' },
             { label: 'HUMAN REVIEW', detail: 'Score, source, and reasoning shown before any action' },
             { label: 'SUBMISSION', detail: 'Human-initiated, always' },
           ],
@@ -101,28 +115,29 @@ export const projects: ProjectData[] = [
       {
         id: 'product-decisions',
         heading: 'Product decisions',
-        kicker: '06',
+        kicker: '06 · Decisions',
         body: [
-          'Every match carries its source, a confidence label, and — where applicable — a verification flag, so the person reviewing it knows whether they are looking at a hard rule match or an LLM judgment call. That distinction changes how much scrutiny a listing deserves before it moves forward.',
+          'Every candidate fact — a skill match, a salary figure, a location — carries its source, a confidence label, and a verified flag. Unknown fields are never guessed and never silently filled in. That’s a stricter rule than most systems like this bother with, and it’s the one that makes the review step actually trustworthy instead of theatrical.',
+          'Matches carry the same treatment: a hard rule match and an LLM judgment call are labeled differently, so the person reviewing knows how much scrutiny a listing deserves before it moves forward.',
         ],
       },
       {
         id: 'human-in-the-loop',
         heading: 'Human-in-the-loop design',
-        kicker: '07',
+        kicker: '07 · Trust',
         quote: 'Automate the work. Never automate trust.',
         body: [
           'A fixed set of conditions routes a listing straight to human review, no matter how well it scores: salary information that is missing or below threshold, visa or work-authorization requirements, a CAPTCHA in the application flow, or multi-factor authentication on the target site.',
-          'These are hard stops, not suggestions. The system does not attempt to route around them, guess at them, or submit past them. Nothing gets auto-submitted — the person always reviews and initiates the final step.',
+          'These are hard stops, not suggestions. The system does not attempt to route around them, guess at them, or submit past them. No application is ever auto-submitted — the person always reviews and initiates the final step.',
         ],
         bullets: ['Salary — missing or below threshold', 'Visa / work authorization required', 'CAPTCHA encountered', 'MFA encountered'],
       },
       {
         id: 'engineering-quality',
         heading: 'Engineering quality',
-        kicker: '08',
+        kicker: '08 · Quality',
         body: [
-          'A system that touches real applications on someone’s behalf has to be boring in the right ways: predictable schema changes, a clean type-checked codebase, and a test suite that actually gets run.',
+          'A system that touches real applications on someone’s behalf has to be boring in the right ways: predictable schema changes, a clean type-checked codebase, and a test suite that actually gets run before every change ships.',
         ],
         metrics: [
           { value: '350+', label: 'Passing unit tests' },
@@ -133,8 +148,8 @@ export const projects: ProjectData[] = [
       },
       {
         id: 'next',
-        heading: 'What I would build next',
-        kicker: '09',
+        heading: 'What I’d do next',
+        kicker: '09 · Next',
         bullets: [
           'Smarter job prioritisation — rank the review queue, not just the match list',
           'Stronger feedback loops — feed outcomes (interview, rejection, silence) back into matching',
@@ -157,15 +172,25 @@ export const projects: ProjectData[] = [
     category: 'Robotics · Operations',
     status: 'Ongoing',
     role: 'Operations Management Intern, Field Operations',
+    whatIOwned: [
+      'End-to-end field operations across cities in Andhra Pradesh and Karnataka',
+      'SOD / MOD / EOD reporting discipline across Field Officers, Data Captains, and Data Collectors',
+      'The South India VLA Field Recording Guide and cluster-wise lead directories',
+      'The operations command center — workbook, backend, alerts, dashboard',
+      'The OCR productivity extractor and OpsIntel',
+    ],
+    tagline: 'Operating AI in the real world.',
     description:
-      'Operating AI in the real world: field operations for large-scale robotics and egocentric data collection, plus the internal systems that keep that operation observable.',
+      'End-to-end field operations for large-scale robotics and egocentric data collection, plus the internal systems that make that operation observable.',
     technologies: [
       'Google Sheets',
-      'Apps Script',
+      'Google Apps Script',
       'JSON API',
       'Slack / Email alerts',
       'Claude Vision',
-      'WhatsApp parsing pipelines',
+      'React',
+      'Node.js / WebSocket',
+      'ReportLab',
     ],
     metrics: [
       { value: '116', label: 'Businesses mapped for VLA data collection' },
@@ -184,7 +209,7 @@ export const projects: ProjectData[] = [
         kicker: 'Overview',
         body: [
           'Robotics data isn’t just a model problem. It’s an operations problem.',
-          'Collecting large-scale egocentric data for robot learning means coordinating field officers, data captains, and data collectors across many physical locations, every day, with enough consistency that the data is actually usable downstream. I work across this field-operations loop — not the model, the operation that feeds it.',
+          'Collecting large-scale egocentric data for robot learning (VLA — vision-language-action — training data) means coordinating Field Officers, Data Captains, and Data Collectors across many physical sites in Andhra Pradesh and Karnataka, every day, with enough consistency that the data is actually usable downstream. I own end-to-end field operations for this — SOD/MOD/EOD reporting included — and built the tooling that keeps it observable.',
         ],
       },
       {
@@ -198,13 +223,13 @@ export const projects: ProjectData[] = [
             { label: 'DATA CAPTAINS' },
             { label: 'DATA COLLECTORS' },
             { label: 'DATA COLLECTION' },
-            { label: 'REPORTING' },
+            { label: 'REPORTING', detail: 'SOD / MOD / EOD' },
             { label: 'OPERATIONS COMMAND CENTER' },
             { label: 'ANALYTICS' },
           ],
         },
         body: [
-          'I work within this structure alongside the broader field-operations team — not as the sole owner of it, but as the person who also builds the tooling that makes it observable.',
+          'I designed systems around real-world operations — the command center, the OCR extractor, OpsIntel — that sit inside this broader field-operations structure at Instawork Robotics Labs, not as the sole owner of the company’s robotics infrastructure.',
         ],
       },
       {
@@ -212,29 +237,30 @@ export const projects: ProjectData[] = [
         heading: 'The operations command center',
         kicker: 'System 1',
         body: [
-          'Field operations generate a constant stream of small, distributed updates. Without a system to aggregate them, the ops team is flying blind between reports. I built a lightweight command center on top of tools the team already used, so it required no new software to adopt.',
+          'Field operations generate a constant stream of small, distributed updates. Without a system to aggregate them, the ops team is flying blind between reports. I designed a multi-layered command center on top of tools the team already used, so it required no new software to adopt.',
         ],
         diagram: {
           title: 'Command center pipeline',
           stages: [
             { label: 'GOOGLE SHEETS', detail: '10-sheet live operations workbook' },
-            { label: 'APPS SCRIPT', detail: 'Transforms and validates incoming data' },
+            { label: 'APPS SCRIPT', detail: 'Backend logic, validation, JSON API' },
             { label: 'JSON API', detail: 'Exposes structured operations data' },
             { label: 'SLACK / EMAIL ALERTS', detail: 'Automated notification on thresholds' },
-            { label: 'LIVE DASHBOARD', detail: 'Polls every 30 seconds' },
+            { label: 'LIVE DASHBOARD', detail: 'Dark-mode, polls every 30 seconds' },
           ],
         },
         metrics: [
           { value: '10', label: 'Sheets in the live workbook' },
           { value: '30s', label: 'Dashboard poll interval' },
         ],
+        mockup: 'command-center',
       },
       {
         id: 'ocr-extractor',
         heading: 'OCR productivity extractor',
         kicker: 'System 2',
         body: [
-          'Field productivity was being reported through screenshots. I built a pipeline that reads those screenshots directly, using Claude Vision to extract structured productivity data without anyone re-typing numbers by hand.',
+          'Field productivity was being reported through screenshots. I built a React tool that reads those screenshots directly, using Claude Vision to extract structured productivity metadata without anyone re-typing numbers by hand.',
         ],
         diagram: {
           title: 'OCR extraction pipeline',
@@ -251,7 +277,7 @@ export const projects: ProjectData[] = [
         heading: 'OpsIntel',
         kicker: 'System 3',
         body: [
-          'The same problem shows up in text form: field updates arrive over WhatsApp, in free text, and are hard to analyze at scale. OpsIntel is the system that turns those messages into structured operations data — see the dedicated case study for detail.',
+          'The same problem shows up in text form: field updates arrive over WhatsApp, in free text, and are hard to analyze at scale. OpsIntel is the system I built to turn those messages into structured operations data — see the dedicated case study for detail.',
         ],
         diagram: {
           title: 'OpsIntel at a glance',
@@ -268,15 +294,14 @@ export const projects: ProjectData[] = [
         heading: 'Turning physical locations into training infrastructure',
         kicker: 'Field intelligence',
         body: [
-          'A large part of preparing for VLA (vision-language-action) data collection is knowing exactly where to collect it. I built the field-recording guide used to plan this: a business-by-business map of South India covering the categories and dexterity profiles that matter for training data, organized into cluster-wise lead directories and two-shift field plans.',
+          'A large part of preparing for VLA data collection is knowing exactly where to collect it. I sourced and validated commercial data-collection locations and produced the field-recording guide used to plan this: a business-by-business map of South India covering the categories and dexterity profiles that matter for training data, built with ReportLab and organized into cluster-wise lead directories and two-shift field plans.',
         ],
         bullets: [
           '116 businesses mapped across 19 categories',
-          'South India VLA Field Recording Guide',
+          'South India VLA Field Recording Guide, built with ReportLab',
           'Cluster-wise lead directories',
-          'Two-shift field plans',
-          'Rajampet–Kadapa corridor coverage',
-          'Bengaluru neighborhood / high-dexterity business directories',
+          'Two-shift field plans for the Rajampet–Kadapa corridor',
+          'Neighborhood / high-dexterity business directories across Bengaluru',
         ],
         metrics: [
           { value: '116', label: 'Businesses mapped' },
@@ -297,6 +322,11 @@ export const projects: ProjectData[] = [
     category: 'Internal Tool · Ops Automation',
     status: 'Building',
     role: 'Self-initiated, built alongside field operations at Instawork Robotics Labs',
+    whatIOwned: [
+      'Parsing pipeline for free-text WhatsApp field updates',
+      'Structured data schema for field operations events',
+      'Real-time dashboard, kept in sync over WebSocket',
+    ],
     description:
       'Field communication contains useful operational information but is difficult to analyze at scale. OpsIntel converts free-text field updates into structured operational intelligence.',
     technologies: ['React', 'TypeScript', 'Node.js', 'WebSocket'],
@@ -309,15 +339,15 @@ export const projects: ProjectData[] = [
       {
         id: 'problem',
         heading: 'The problem',
-        kicker: '01',
+        kicker: '01 · Problem',
         body: [
           'Field officers report status over WhatsApp because it’s the fastest channel available to them. That’s good for speed and bad for analysis: the same information — a location update, a blocker, a completion count — shows up in a dozen phrasings, spread across threads, with no structure to query against.',
         ],
       },
       {
         id: 'approach',
-        heading: 'The approach',
-        kicker: '02',
+        heading: 'Approach',
+        kicker: '02 · Approach',
         diagram: {
           title: 'From message to insight',
           stages: [
@@ -330,19 +360,20 @@ export const projects: ProjectData[] = [
         body: [
           'OpsIntel parses incoming field updates, extracts the operationally relevant fields, and writes them into a structured store that a live dashboard reads from in real time over WebSocket. The rest of the ops team gets a queryable view of the field instead of a scrollback of chat messages.',
         ],
+        mockup: 'opsintel',
       },
       {
         id: 'build',
-        heading: 'Build',
-        kicker: '03',
+        heading: 'What I built',
+        kicker: '03 · Build',
         body: [
-          'A Node.js service handles parsing and transformation; a React and TypeScript frontend renders the live dashboard, kept in sync over WebSocket rather than polling. It was built to plug into the same operations command center used across Instawork field operations, not as a standalone app.',
+          'A Node.js service handles parsing and transformation; a React and TypeScript frontend renders the live dashboard, kept in sync over WebSocket rather than polling. It plugs into the same operations command center used across Instawork field operations rather than standing alone.',
         ],
       },
       {
         id: 'status',
         heading: 'Status',
-        kicker: '04',
+        kicker: '04 · Status',
         body: [
           'OpsIntel is part of the internal ops stack at Instawork Robotics Labs. No adoption or usage figures are published here — this section describes the system as built, not its results.',
         ],
@@ -361,8 +392,14 @@ export const projects: ProjectData[] = [
     category: 'Consumer Product',
     status: 'Shipped',
     role: 'Solo founder / product owner — self-initiated',
+    whatIOwned: [
+      'Full product scope, solo — personas, UX flows, feature prioritisation',
+      'Mobile-first UI build (React)',
+      'Supabase data layer and auth',
+      'AI recommendation integration',
+    ],
     description:
-      'Conventional travel products don’t capture authentic, community-driven local experiences. Karavali is a mobile-first discovery product built around the coastal Karnataka region.',
+      'Conventional travel products don’t capture authentic, community-driven local experiences. Karavali is a mobile-first discovery product built around coastal Karnataka.',
     technologies: ['React', 'Supabase', 'AI recommendations'],
     metrics: [{ value: '1 week', label: 'From start to live MVP' }],
     tier: 2,
@@ -373,15 +410,15 @@ export const projects: ProjectData[] = [
       {
         id: 'problem',
         heading: 'The problem',
-        kicker: '01',
+        kicker: '01 · Problem',
         body: [
-          'Most travel discovery products optimize for reviews and ratings at scale, which flattens out the kind of local, word-of-mouth knowledge that actually makes a place worth visiting. That knowledge exists in the community — it’s just not captured anywhere a visitor can find it.',
+          'Most travel discovery products optimize for reviews and ratings at scale, which flattens the kind of local, word-of-mouth knowledge that actually makes a place worth visiting. That knowledge exists in the community — it’s just not captured anywhere a visitor can find it.',
         ],
       },
       {
-        id: 'process',
-        heading: 'Process',
-        kicker: '02',
+        id: 'approach',
+        heading: 'Approach',
+        kicker: '02 · Approach',
         diagram: {
           title: 'Build process',
           stages: [
@@ -395,24 +432,25 @@ export const projects: ProjectData[] = [
           ],
         },
         body: [
-          'Solo end-to-end: defined the problem, sketched personas and UX flows, prioritized what actually needed to be in a first version, built the mobile UI, wired in AI-assisted recommendations, and deployed.',
+          'Solo, end to end: defined the problem, sketched personas and UX flows, prioritized what actually needed to be in a first version, built the mobile UI, wired in AI-assisted recommendations, and deployed. The product started as a campus travel app and evolved into a community-driven discovery platform as the scope became clearer.',
         ],
       },
       {
         id: 'build',
-        heading: 'Build',
-        kicker: '03',
+        heading: 'What I built',
+        kicker: '03 · Build',
         body: [
-          'React on the frontend, Supabase for auth, data, and storage. Recommendation logic is AI-assisted rather than a static list — surfacing suggestions based on region and category rather than a fixed directory.',
+          'React on the frontend, Supabase for auth, data, and storage. Recommendation logic is AI-assisted rather than a static list — surfacing hyper-local suggestions across Udupi and Dakshina Kannada by region and category, with light gamification layered on top to encourage exploration.',
         ],
         metrics: [{ value: '1 week', label: 'Live MVP shipped' }],
+        mockup: 'karavali',
       },
       {
-        id: 'scope',
-        heading: 'Scope',
-        kicker: '04',
+        id: 'status',
+        heading: 'Status',
+        kicker: '04 · Status',
         body: [
-          'Karavali focuses on coastal Karnataka — Udupi and Dakshina Kannada — as the initial region. No user or traction numbers are published here; this is a shipped MVP, not a scaled product.',
+          'Karavali is a shipped, live MVP focused on coastal Karnataka. No user or traction numbers are published here.',
         ],
       },
     ],
@@ -429,6 +467,12 @@ export const projects: ProjectData[] = [
     category: 'AI Product',
     status: 'Building',
     role: 'Self-initiated product',
+    whatIOwned: [
+      'FastAPI backend and deterministic rule engine',
+      'Groq LLM integration for document Q&A',
+      'Feature scope and PRD, prioritised via MoSCoW',
+      'PDF report generation',
+    ],
     description:
       'A document-review copilot for audit and compliance work: ingest a document, run it against a rule engine and an LLM, and produce flagged anomalies plus a structured report.',
     technologies: ['FastAPI', 'Next.js', 'Groq', 'PDF generation'],
@@ -441,49 +485,48 @@ export const projects: ProjectData[] = [
       {
         id: 'problem',
         heading: 'The problem',
-        kicker: '01',
+        kicker: '01 · Problem',
         body: [
           'Document review for audit and compliance is repetitive and detail-sensitive at the same time — exactly the combination that causes fatigue-driven misses. Reviewers need a way to triage documents quickly without losing the ability to ask follow-up questions about what they’re looking at.',
         ],
       },
       {
         id: 'architecture',
-        heading: 'Architecture',
-        kicker: '02',
+        heading: 'What I built',
+        kicker: '02 · Build',
         diagram: {
           title: 'Review pipeline',
           stages: [
             { label: 'DOCUMENT' },
             { label: 'INGESTION' },
-            { label: 'RULE ENGINE' },
-            { label: 'LLM' },
+            { label: 'RULE ENGINE', detail: 'Deterministic checks' },
+            { label: 'LLM', detail: 'Groq — natural-language Q&A' },
             { label: 'ANOMALIES / Q&A' },
-            { label: 'STRUCTURED REPORT' },
+            { label: 'STRUCTURED REPORT', detail: 'Generated PDF' },
           ],
         },
+        mockup: 'audit-ai',
       },
       {
         id: 'personas',
         heading: 'Who it’s for',
-        kicker: '03',
+        kicker: '03 · Personas',
         bullets: ['Auditor', 'Reviewer', 'Compliance Lead'],
       },
       {
         id: 'decisions',
         heading: 'Product decisions',
-        kicker: '04',
+        kicker: '04 · Decisions',
         body: [
-          'Prioritized with MoSCoW: document ingestion, AI-assisted Q&A over the document, a flagging engine for anomalies, and an exportable summary were treated as must-haves for a usable first version.',
+          'A FastAPI backend runs a deterministic rule engine underneath the Groq LLM layer, rather than leaving anomaly detection entirely to model judgment. Feature scope was prioritized with MoSCoW: document ingestion, AI-assisted Q&A, a flagging engine, and an exportable summary were the must-haves for a usable first version.',
         ],
         bullets: ['Document ingestion', 'AI Q&A over document contents', 'Flagging engine', 'Exportable summary report'],
       },
       {
-        id: 'build',
-        heading: 'Build',
-        kicker: '05',
-        body: [
-          'FastAPI backend handling ingestion and the rule engine, Groq for fast LLM inference, Next.js frontend, and server-side PDF generation for the exportable report. No customer usage is published here — this is a self-initiated build, not a deployed product with users.',
-        ],
+        id: 'status',
+        heading: 'Status',
+        kicker: '05 · Status',
+        body: ['Ongoing self-initiated build. No customer usage is published here.'],
       },
     ],
   },
@@ -498,8 +541,13 @@ export const projects: ProjectData[] = [
     subtitle: 'Automatic Number Plate Recognition',
     category: 'Computer Vision',
     status: 'Shipped',
-    role: 'Self-initiated',
-    description: 'A detection-and-OCR pipeline that finds vehicle plates in an image and reads the text off them.',
+    role: 'B.Tech Final Year Project — MIT Manipal',
+    whatIOwned: [
+      'Detection + OCR pipeline (YOLOv8n + Tesseract)',
+      'Milestone scoping and iterative delivery',
+      'Mid-term report, final presentation, full FYP report',
+    ],
+    description: 'A real-time detection-and-OCR pipeline that finds vehicle plates in an image and reads the text off them.',
     technologies: ['Python', 'OpenCV', 'YOLOv8n', 'Tesseract OCR'],
     metrics: [{ value: '89.1%', label: 'mAP@50' }],
     tier: 3,
@@ -510,7 +558,7 @@ export const projects: ProjectData[] = [
       {
         id: 'pipeline',
         heading: 'Pipeline',
-        kicker: '01',
+        kicker: '01 · Build',
         diagram: {
           title: 'Detection to text',
           stages: [
@@ -522,14 +570,14 @@ export const projects: ProjectData[] = [
           ],
         },
         body: [
-          'YOLOv8n localizes the plate region in the source image; the crop is passed to Tesseract for text extraction. OpenCV handles preprocessing between the two stages.',
+          'YOLOv8n localizes the plate region in the source image; the crop is passed to Tesseract for text extraction. OpenCV handles preprocessing between the two stages. Delivered as a B.Tech final-year project with scoped milestones, source code, a mid-term report, and a final presentation.',
         ],
       },
       {
         id: 'result',
         heading: 'Result',
-        kicker: '02',
-        metrics: [{ value: '89.1%', label: 'mAP@50 (verified)' }],
+        kicker: '02 · Result',
+        metrics: [{ value: '89.1%', label: 'mAP@50 (measured)' }],
         body: ['No additional benchmarks are published beyond this measured result.'],
       },
     ],
@@ -545,7 +593,8 @@ export const projects: ProjectData[] = [
     subtitle: 'Onboarding for low-connectivity users.',
     category: 'Product Case Study',
     status: 'Concept',
-    role: 'Product case study — self-initiated',
+    role: 'Self-initiated PM project',
+    whatIOwned: ['3 personas', '5-screen icon-first UX flow', 'Feature roadmap across 2 sprints'],
     description:
       'A KYC onboarding flow designed for rural and semi-urban users on 2G/3G connections with lower digital literacy.',
     technologies: ['Product design', 'DigiLocker', 'Voice UX'],
@@ -558,7 +607,7 @@ export const projects: ProjectData[] = [
       {
         id: 'problem',
         heading: 'The problem',
-        kicker: '01',
+        kicker: '01 · Problem',
         body: [
           'Standard KYC flows assume reliable connectivity and comfort with multi-step digital forms. Neither holds for a large share of rural and semi-urban users, which shows up as drop-off rather than failure — people simply give up partway through.',
         ],
@@ -566,14 +615,14 @@ export const projects: ProjectData[] = [
       },
       {
         id: 'ux',
-        heading: 'UX approach',
-        kicker: '02',
-        body: ['A 5-screen, icon-first flow — minimizing text entry and relying on recognizable icons over instructions.'],
+        heading: 'What I built',
+        kicker: '02 · Build',
+        body: ['3 personas, and a 5-screen, icon-first flow minimizing text entry in favor of recognizable icons and minimal-tap navigation.'],
       },
       {
         id: 'roadmap',
         heading: 'Feature roadmap',
-        kicker: '03',
+        kicker: '03 · Roadmap',
         bullets: [
           'Sprint 1 — DigiLocker KYC integration',
           'Sprint 1 — Document upload',
@@ -585,7 +634,7 @@ export const projects: ProjectData[] = [
       {
         id: 'targets',
         heading: 'Targets',
-        kicker: '04',
+        kicker: '04 · Targets',
         body: ['These are design targets, not measured results.'],
         metrics: [
           { value: '<3 min', label: 'Onboarding time (target)' },
@@ -604,9 +653,14 @@ export const projects: ProjectData[] = [
     index: '08',
     title: 'ITC Limited — Powerhouse',
     subtitle: 'System mapping',
-    category: 'Electrical Systems',
+    category: 'Electrical Systems · FMCG',
     status: 'Shipped',
-    role: 'Electrical / Powerhouse Intern',
+    role: 'Electrical / Powerhouse Intern — Munger, Bihar',
+    whatIOwned: [
+      'System mapping across 15+ sub-distribution boards',
+      'Technical documentation used for operational training',
+      'Switchover logic and root-cause / single-point-of-failure analysis',
+    ],
     description:
       'Mapping and documenting a real power-distribution system — not software, but the same discipline of understanding how a complex system actually behaves under failure.',
     technologies: ['RUPS', 'Bypass systems', 'DG', 'Technical documentation'],
@@ -619,7 +673,7 @@ export const projects: ProjectData[] = [
       {
         id: 'system',
         heading: 'System mapping',
-        kicker: '01',
+        kicker: '01 · System',
         diagram: {
           title: 'Power distribution',
           stages: [
@@ -632,13 +686,12 @@ export const projects: ProjectData[] = [
       {
         id: 'work',
         heading: 'What the work involved',
-        kicker: '02',
+        kicker: '02 · Work',
         bullets: [
-          'Technical documentation',
-          'Training material',
-          'Switchover logic',
-          'Root-cause analysis',
-          'Single points of failure',
+          'Technical documentation for operational training',
+          'Stakeholder-facing presentations translating electrical data',
+          'Switchover logic analysis',
+          'Root-cause analysis and single-point-of-failure mapping',
         ],
         body: [
           'Understanding a rotary UPS, bypass, and diesel-generator setup well enough to document its switchover logic and identify single points of failure is the same underlying skill as debugging a distributed system: read the whole system, find where it actually breaks, and write it down so someone else can act on it.',

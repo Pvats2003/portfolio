@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { experience, leadership } from '@/data/experience';
+import { experience, leadership, education, certifications } from '@/data/experience';
 import { skillClusters } from '@/data/skills';
 import { projects } from '@/data/projects';
 import { site } from '@/data/site';
@@ -30,13 +30,17 @@ export default function ResumePage() {
 
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-faint">
           <span>{site.email}</span>
+          <span>{site.phone}</span>
+          <span>{site.location}</span>
           <span>{site.linkedinLabel}</span>
         </div>
 
         <section className="mt-12">
           <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Summary</h2>
           <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">
-            {site.headline} {site.supporting}
+            Product-minded operator bridging field operations and AI/robotics data infrastructure — seeking Associate
+            Product Manager / Founder’s Office roles where technical fluency and hands-on ops execution can drive
+            0→1 product building.
           </p>
         </section>
 
@@ -49,7 +53,11 @@ export default function ResumePage() {
                   <h3 className="text-lg font-semibold text-ink">{item.title}</h3>
                   <span className="font-mono text-xs text-faint">{item.period}</span>
                 </div>
-                <p className="text-sm text-muted">{item.org}</p>
+                <p className="text-sm text-muted">
+                  {item.org}
+                  {item.location ? ` — ${item.location}` : ''}
+                  {item.industry ? ` · ${item.industry}` : ''}
+                </p>
                 <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
                   {item.focus.map((f) => (
                     <li key={f} className="text-sm text-muted before:mr-1.5 before:text-faint before:content-['·']">
@@ -81,7 +89,16 @@ export default function ResumePage() {
 
         <section className="mt-12">
           <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Education</h2>
-          <p className="mt-3 text-sm text-muted">Electronics & Communication Engineering</p>
+          <div className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <div className="min-w-0 flex-1">
+              <h3 className="text-base font-semibold text-ink">{education.degree}</h3>
+              <p className="text-sm text-muted">
+                {education.school}, {education.location}
+              </p>
+            </div>
+            <span className="shrink-0 font-mono text-xs text-faint">{education.period}</span>
+          </div>
+          <p className="mt-3 text-sm text-muted">{certifications.join(' · ')}</p>
         </section>
 
         <section className="mt-12">
@@ -101,13 +118,13 @@ export default function ResumePage() {
           <div className="mt-5 space-y-4">
             {leadership.map((item) => (
               <div key={item.title} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                <div>
+                <div className="min-w-0 flex-1">
                   <h3 className="text-base font-semibold text-ink">{item.title}</h3>
                   <p className="text-sm text-muted">
                     {item.org} — {item.detail}
                   </p>
                 </div>
-                <span className="font-mono text-xs text-faint">{item.period}</span>
+                <span className="shrink-0 font-mono text-xs text-faint">{item.period}</span>
               </div>
             ))}
           </div>

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
-import { site, buildStages } from '@/data/site';
+import { site, howIWork } from '@/data/site';
 
 export function Hero() {
   const [activeStage, setActiveStage] = useState<number | null>(null);
@@ -63,9 +63,14 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
           className="mt-20"
         >
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-faint">How I build</p>
+          <a
+            href="#how-i-work"
+            className="font-mono text-xs uppercase tracking-[0.2em] text-faint transition-colors hover:text-accent"
+          >
+            How I work
+          </a>
           <div className="mt-5 flex flex-col divide-y divide-border border-y border-border sm:flex-row sm:divide-x sm:divide-y-0">
-            {buildStages.map((stage, i) => (
+            {howIWork.map((stage, i) => (
               <button
                 key={stage.index}
                 type="button"
