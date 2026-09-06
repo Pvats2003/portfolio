@@ -1,0 +1,39 @@
+import { tier1Projects, tier2Projects, tier3Projects } from '@/data/projects';
+import { SectionHeader } from '@/components/ui/SectionHeader';
+import { FeaturedProject } from '@/components/projects/FeaturedProject';
+import { ProjectCard } from '@/components/projects/ProjectCard';
+
+export function ProjectIndex() {
+  const [careerOS, ...restTier1] = tier1Projects;
+
+  return (
+    <section id="work" className="scroll-mt-20 border-b border-border py-24 sm:py-32">
+      <div className="mx-auto max-w-content px-6 sm:px-10">
+        <SectionHeader kicker="Selected work" title="Products, systems, and experiments I’ve built." />
+
+        <div className="mt-14 space-y-6">
+          {careerOS && <FeaturedProject project={careerOS} size="xl" />}
+          {restTier1.map((project) => (
+            <FeaturedProject key={project.id} project={project} size="lg" />
+          ))}
+        </div>
+
+        {tier2Projects.length > 0 && (
+          <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {tier2Projects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        )}
+
+        {tier3Projects.length > 0 && (
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {tier3Projects.map((project) => (
+              <ProjectCard key={project.id} project={project} compact />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
