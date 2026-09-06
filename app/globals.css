@@ -31,52 +31,6 @@ body {
   background-size: 48px 48px;
 }
 
-@keyframes boot-in {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-boot-in {
-  opacity: 0;
-  animation-name: boot-in;
-  animation-duration: 0.5s;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-  animation-fill-mode: forwards;
-}
-
-@keyframes boot-draw {
-  from {
-    stroke-dashoffset: 1;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-.animate-boot-draw {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation-name: boot-draw;
-  animation-duration: 0.4s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-boot-in,
-  .animate-boot-draw {
-    animation: none;
-    opacity: 1;
-    stroke-dashoffset: 0;
-  }
-}
-
 .scrollbar-none {
   scrollbar-width: none;
   -ms-overflow-style: none;

@@ -1,4 +1,3 @@
-import { BootSequence } from '@/components/BootSequence';
 import { Hero } from '@/components/sections/Hero';
 import { ProofStrip } from '@/components/sections/ProofStrip';
 import { ProjectIndex } from '@/components/projects/ProjectIndex';
@@ -10,7 +9,6 @@ import { Contact } from '@/components/sections/Contact';
 export default function HomePage() {
   return (
     <>
-      <BootSequence />
       <Hero />
       <ProofStrip />
       <ProjectIndex />

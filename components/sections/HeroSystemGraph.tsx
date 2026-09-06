@@ -10,10 +10,15 @@ const NODES = [
 ] as const;
 
 const CENTER = { x: 130, y: 150 };
+const LINE_DURATION = 0.5;
+const LINE_STAGGER = 0.1;
+const LINE_START = 0.15;
 
 export function HeroSystemGraph() {
   const ref = useRef<HTMLDivElement>(null);
-  const [reduced, setReduced] = useState(false);
+  const [reduced, setReduced] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
   const [activeNode, setActiveNode] = useState<string | null>(null);
 
   const mvX = useMotionValue(0);
@@ -64,8 +69,8 @@ export function HeroSystemGraph() {
         style={reduced ? undefined : { x: groupX, y: groupY }}
       >
         <g stroke="#212426" strokeWidth="1" fill="none">
-          {NODES.map((n) => (
-            <line
+          {NODES.map((n, i) => (
+            <motion.line
               key={n.key}
               x1={CENTER.x}
               y1={CENTER.y}
@@ -73,46 +78,70 @@ export function HeroSystemGraph() {
               y2={n.y}
               className={activeNode === n.key ? 'stroke-accent/60' : ''}
               style={{ transition: 'stroke 0.3s ease' }}
+              initial={reduced ? false : { pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={reduced ? { duration: 0 } : { duration: LINE_DURATION, delay: LINE_START + i * LINE_STAGGER, ease: [0.16, 1, 0.3, 1] }}
             />
           ))}
         </g>
 
-        <circle cx={CENTER.x} cy={CENTER.y} r="5" className="fill-accent" />
-        <text
+        <motion.circle
+          cx={CENTER.x}
+          cy={CENTER.y}
+          r="5"
+          className="fill-accent"
+          initial={reduced ? false : { opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={reduced ? { duration: 0 } : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          style={{ transformOrigin: `${CENTER.x}px ${CENTER.y}px` }}
+        />
+        <motion.text
           x={CENTER.x}
           y={CENTER.y + 22}
           textAnchor="middle"
           className="fill-faint font-mono text-[9px] uppercase tracking-widest"
+          initial={reduced ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={reduced ? { duration: 0 } : { duration: 0.3, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >
           Systems
-        </text>
+        </motion.text>
 
-        {NODES.map((n) => (
-          <g
-            key={n.key}
-            className="pointer-events-auto cursor-default"
-            onMouseEnter={() => setActiveNode(n.key)}
-            onMouseLeave={() => setActiveNode(null)}
-          >
-            <circle
-              cx={n.x}
-              cy={n.y}
-              r={activeNode === n.key ? 5 : 3.5}
-              className={activeNode === n.key ? 'fill-accent' : 'fill-border-strong'}
-              style={{ transition: 'r 0.25s ease, fill 0.25s ease' }}
-            />
-            <text
-              x={n.x}
-              y={n.y - 14}
-              textAnchor="middle"
-              className={`font-mono text-[10px] uppercase tracking-widest transition-colors duration-300 ${
-                activeNode === n.key ? 'fill-ink' : 'fill-faint'
-              }`}
+        {NODES.map((n, i) => {
+          const appearAt = LINE_START + i * LINE_STAGGER + LINE_DURATION * 0.7;
+          return (
+            <g
+              key={n.key}
+              className="pointer-events-auto cursor-default"
+              onMouseEnter={() => setActiveNode(n.key)}
+              onMouseLeave={() => setActiveNode(null)}
             >
-              {n.label}
-            </text>
-          </g>
-        ))}
+              <motion.circle
+                cx={n.x}
+                cy={n.y}
+                r={activeNode === n.key ? 5 : 3.5}
+                className={activeNode === n.key ? 'fill-accent' : 'fill-border-strong'}
+                style={{ transition: 'r 0.25s ease, fill 0.25s ease', transformOrigin: `${n.x}px ${n.y}px` }}
+                initial={reduced ? false : { opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={reduced ? { duration: 0 } : { duration: 0.3, delay: appearAt, ease: [0.16, 1, 0.3, 1] }}
+              />
+              <motion.text
+                x={n.x}
+                y={n.y - 14}
+                textAnchor="middle"
+                className={`font-mono text-[10px] uppercase tracking-widest transition-colors duration-300 ${
+                  activeNode === n.key ? 'fill-ink' : 'fill-faint'
+                }`}
+                initial={reduced ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={reduced ? { duration: 0 } : { duration: 0.3, delay: appearAt, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {n.label}
+              </motion.text>
+            </g>
+          );
+        })}
       </motion.svg>
     </div>
   );
