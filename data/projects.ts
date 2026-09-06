@@ -11,6 +11,7 @@ export const projects: ProjectData[] = [
     subtitle: 'An auditable AI career operations system.',
     category: 'AI Product · Automation',
     status: 'Building',
+    heroMotif: 'system',
     role: 'Solo builder — self-initiated',
     whatIOwned: [
       'System architecture, end to end — discovery, matching, generation, review, and submission-assist as separate services',
@@ -176,6 +177,7 @@ export const projects: ProjectData[] = [
     subtitle: 'Robotics + AI field operations',
     category: 'Robotics · Operations',
     status: 'Ongoing',
+    heroMotif: 'grid',
     role: 'Operations Management Intern, Field Operations',
     whatIOwned: [
       'End-to-end field operations across cities in Andhra Pradesh and Karnataka',

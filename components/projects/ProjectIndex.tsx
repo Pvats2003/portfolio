@@ -12,7 +12,7 @@ export function ProjectIndex() {
       <div className="mx-auto max-w-content px-6 sm:px-10">
         <SectionHeader kicker="Selected work" title="Products, systems, and experiments I’ve built." />
 
-        <div className="mt-14 space-y-6">
+        <div className="mt-16 space-y-16">
           {careerOS && <FlagshipProject project={careerOS} />}
           {restTier1.map((project) => (
             <FeaturedProject key={project.id} project={project} />
@@ -20,7 +20,7 @@ export function ProjectIndex() {
         </div>
 
         {tier2Projects.length > 0 && (
-          <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
             {tier2Projects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
@@ -28,7 +28,7 @@ export function ProjectIndex() {
         )}
 
         {tier3Projects.length > 0 && (
-          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
             {tier3Projects.map((project) => (
               <ProjectCard key={project.id} project={project} compact />
             ))}

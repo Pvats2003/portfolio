@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { ProjectData } from '@/lib/types';
-import { Tag } from '@/components/ui/Tag';
 import { TechStack } from '@/components/ui/TechStack';
 
 export function FeaturedProject({ project }: { project: ProjectData }) {
@@ -10,16 +9,17 @@ export function FeaturedProject({ project }: { project: ProjectData }) {
   return (
     <Link
       href={href}
-      className="group block rounded-lg border border-border bg-surface p-8 transition-colors duration-300 ease-editorial hover:border-border-strong sm:p-10"
+      className="group block border-t border-border pt-8 transition-colors duration-300 ease-editorial hover:border-accent/40 sm:pt-10"
     >
-      <div className="flex flex-wrap items-center gap-3">
-        <span className="font-mono text-xs text-faint">{project.index}</span>
-        <Tag>{project.category}</Tag>
-        <Tag>{project.status}</Tag>
+      <div className="flex items-center justify-between gap-4">
+        <span className="font-mono text-4xl leading-none text-faint opacity-50 sm:text-5xl">{project.index}</span>
+        <span className="font-mono text-[11px] uppercase tracking-wider text-faint">
+          {project.category} · {project.status}
+        </span>
       </div>
 
       {project.tagline && (
-        <p className="mt-5 font-mono text-xs uppercase tracking-[0.2em] text-accent">{project.tagline}</p>
+        <p className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-accent">{project.tagline}</p>
       )}
 
       <div className="mt-3 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">

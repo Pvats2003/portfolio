@@ -37,21 +37,12 @@ export function Navigation() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="text-sm text-muted transition-colors hover:text-ink"
-            >
+          {[...navLinks, { label: 'Contact', href: '/#contact' }].map((link) => (
+            <Link key={link.label} href={link.href} className="group relative py-1 text-sm text-muted transition-colors hover:text-ink">
               {link.label}
+              <span className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-accent transition-transform duration-300 ease-editorial group-hover:scale-x-100" />
             </Link>
           ))}
-          <Link
-            href="/#contact"
-            className="text-sm text-muted transition-colors hover:text-ink"
-          >
-            Contact
-          </Link>
           <StatusDot label={site.status} className="ml-2" />
           <button
             type="button"

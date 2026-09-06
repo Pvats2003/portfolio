@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
+import { MotionConfig } from 'framer-motion';
 import './globals.css';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { CommandPalette } from '@/components/CommandPalette';
+import { ScrollProgress } from '@/components/ScrollProgress';
 import { site } from '@/data/site';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
@@ -42,16 +44,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="bg-bg font-sans text-ink antialiased">
-        <a
-          href="#main"
-          className="fixed left-4 top-4 z-[100] -translate-y-20 rounded bg-accent px-4 py-2 text-sm font-medium text-bg transition-transform duration-150 focus:translate-y-0"
-        >
-          Skip to content
-        </a>
-        <Navigation />
-        <CommandPalette />
-        <main id="main">{children}</main>
-        <Footer />
+        <MotionConfig reducedMotion="user">
+          <a
+            href="#main"
+            className="fixed left-4 top-4 z-[100] -translate-y-20 rounded bg-accent px-4 py-2 text-sm font-medium text-bg transition-transform duration-150 focus:translate-y-0"
+          >
+            Skip to content
+          </a>
+          <ScrollProgress />
+          <Navigation />
+          <CommandPalette />
+          <main id="main">{children}</main>
+          <Footer />
+        </MotionConfig>
       </body>
     </html>
   );

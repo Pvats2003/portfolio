@@ -5,7 +5,6 @@ import { projects } from '@/data/projects';
 import { CaseStudyHero } from '@/components/case-studies/CaseStudyHero';
 import { CaseStudyNav } from '@/components/case-studies/CaseStudyNav';
 import { CaseStudySection } from '@/components/case-studies/CaseStudySection';
-import { ScrollProgress } from '@/components/case-studies/ScrollProgress';
 
 export function CaseStudyPage({ project }: { project: ProjectData }) {
   const currentIndex = projects.findIndex((p) => p.id === project.id);
@@ -13,7 +12,6 @@ export function CaseStudyPage({ project }: { project: ProjectData }) {
 
   return (
     <article>
-      <ScrollProgress />
       <CaseStudyHero project={project} />
       <CaseStudyNav sections={project.sections.map((s) => ({ id: s.id, heading: s.heading }))} />
       <div>

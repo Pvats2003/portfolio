@@ -6,6 +6,14 @@ import { MetricStrip } from '@/components/ui/Metric';
 export function CaseStudySection({ section }: { section: CaseStudySectionData }) {
   return (
     <section id={section.id} className="scroll-mt-28 border-b border-border py-16 sm:py-20">
+      {section.quote && (
+        <div className="mx-auto mb-14 max-w-content px-6 sm:px-10">
+          <p className="max-w-3xl border-l-2 border-accent pl-6 font-mono text-2xl uppercase leading-snug tracking-tight text-ink sm:text-4xl">
+            {section.quote}
+          </p>
+        </div>
+      )}
+
       <div className="mx-auto grid max-w-content grid-cols-1 gap-10 px-6 sm:px-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
         <div>
           {section.kicker && (
@@ -15,12 +23,6 @@ export function CaseStudySection({ section }: { section: CaseStudySectionData })
         </div>
 
         <div className="max-w-2xl space-y-6">
-          {section.quote && (
-            <blockquote className="border-l-2 border-accent pl-5 font-mono text-base uppercase tracking-wide text-ink sm:text-lg">
-              {section.quote}
-            </blockquote>
-          )}
-
           {section.body?.map((p, i) => (
             <p key={i} className="text-base leading-relaxed text-muted">
               {p}

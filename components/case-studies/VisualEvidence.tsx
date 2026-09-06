@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import { Expand, X } from 'lucide-react';
 import { EvidenceImage, EvidenceLabel, MockupKind } from '@/lib/types';
 
@@ -34,8 +35,15 @@ function CareerOSMockup() {
   return (
     <Chrome>
       <div className="grid grid-cols-5 gap-3">
-        {columns.map((col) => (
-          <div key={col.label} className={col.flagged ? 'rounded-md border border-accent/40 bg-accent/5 p-2' : 'rounded-md border border-border p-2'}>
+        {columns.map((col, ci) => (
+          <motion.div
+            key={col.label}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.4, delay: ci * 0.09, ease: [0.16, 1, 0.3, 1] }}
+            className={col.flagged ? 'rounded-md border border-accent/40 bg-accent/5 p-2' : 'rounded-md border border-border p-2'}
+          >
             <p className="font-mono text-[9px] uppercase tracking-wider text-faint sm:text-[10px]">{col.label}</p>
             <div className="mt-2 space-y-1.5">
               {Array.from({ length: col.count }).map((_, i) => (
@@ -45,13 +53,22 @@ function CareerOSMockup() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-      <div className="mt-4 flex items-center gap-2 rounded-md border border-accent/30 bg-accent/5 px-3 py-2">
-        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.4, delay: columns.length * 0.09, ease: [0.16, 1, 0.3, 1] }}
+        className="mt-4 flex items-center gap-2 rounded-md border border-accent/30 bg-accent/5 px-3 py-2"
+      >
+        <span className="relative flex h-1.5 w-1.5 shrink-0">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60 motion-reduce:hidden" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+        </span>
         <span className="font-mono text-[10px] uppercase tracking-wider text-accent">Human review required — salary unverified</span>
-      </div>
+      </motion.div>
     </Chrome>
   );
 }

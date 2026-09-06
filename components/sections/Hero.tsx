@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
+import { HeroSystemGraph } from '@/components/sections/HeroSystemGraph';
 import { site, howIWork } from '@/data/site';
 
 export function Hero() {
@@ -14,6 +15,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 bg-grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,black_40%,transparent_100%)]"
         aria-hidden
       />
+      <HeroSystemGraph />
       <div className="relative mx-auto max-w-content px-6 sm:px-10">
         <motion.p
           initial={{ opacity: 0, y: 8 }}

@@ -65,6 +65,8 @@ export interface ProjectData {
   principle?: string;
   tagline?: string;
   liveUrl?: string;
+  /** Optional faint background motif on the case-study hero — digital system vs. real-world operations. */
+  heroMotif?: 'system' | 'grid';
   technologies: string[];
   metrics: MetricItem[];
   tier: ProjectTier;
