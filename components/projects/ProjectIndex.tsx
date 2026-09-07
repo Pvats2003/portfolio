@@ -1,11 +1,11 @@
 import { tier1Projects, tier2Projects, tier3Projects } from '@/data/projects';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { CareerOSFeature } from '@/components/projects/CareerOSFeature';
-import { FeaturedProject } from '@/components/projects/FeaturedProject';
+import { InstaworkFeature } from '@/components/projects/InstaworkFeature';
 import { ProjectCard } from '@/components/projects/ProjectCard';
 
 export function ProjectIndex() {
-  const [careerOS, ...restTier1] = tier1Projects;
+  const [careerOS, instawork] = tier1Projects;
 
   return (
     <section id="work" className="scroll-mt-20 border-b border-border py-24 sm:py-32">
@@ -14,9 +14,7 @@ export function ProjectIndex() {
 
         <div className="mt-16 space-y-16">
           {careerOS && <CareerOSFeature project={careerOS} />}
-          {restTier1.map((project) => (
-            <FeaturedProject key={project.id} project={project} />
-          ))}
+          {instawork && <InstaworkFeature project={instawork} />}
         </div>
 
         {tier2Projects.length > 0 && (
