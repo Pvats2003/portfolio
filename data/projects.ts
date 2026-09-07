@@ -496,7 +496,7 @@ export const projects: ProjectData[] = [
       'A document-review copilot for audit and compliance work: ingest a document, run it against a rule engine and an LLM, and produce flagged anomalies plus a structured report.',
     technologies: ['FastAPI', 'Next.js', 'Groq', 'PDF generation'],
     metrics: [],
-    tier: 3,
+    tier: 2,
     featured: false,
     caseStudyRoute: '/work/audit-ai',
     visualKind: 'pipeline',

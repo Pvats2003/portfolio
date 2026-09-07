@@ -5,7 +5,7 @@ import { MetricStrip } from '@/components/ui/Metric';
 
 export function CaseStudySection({ section }: { section: CaseStudySectionData }) {
   return (
-    <section id={section.id} className="scroll-mt-28 border-b border-border py-16 sm:py-20">
+    <section id={section.id} className="scroll-mt-28 border-b border-border py-20 sm:py-28">
       {section.quote && (
         <div className="mx-auto mb-14 max-w-content px-6 sm:px-10">
           <p className="max-w-3xl border-l-2 border-border-strong pl-6 font-mono text-2xl uppercase leading-snug tracking-tight text-ink sm:text-4xl">

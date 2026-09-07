@@ -20,7 +20,7 @@ export function ProjectIndex() {
         </div>
 
         {tier2Projects.length > 0 && (
-          <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
+          <div className="mt-20 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             {tier2Projects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
@@ -28,10 +28,13 @@ export function ProjectIndex() {
         )}
 
         {tier3Projects.length > 0 && (
-          <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-            {tier3Projects.map((project) => (
-              <ProjectCard key={project.id} project={project} compact />
-            ))}
+          <div className="mt-24">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-faint">Archive</p>
+            <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 border-t border-border pt-6 sm:grid-cols-3">
+              {tier3Projects.map((project) => (
+                <ProjectCard key={project.id} project={project} compact />
+              ))}
+            </div>
           </div>
         )}
       </div>

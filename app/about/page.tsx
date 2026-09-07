@@ -17,8 +17,8 @@ export default function AboutPage() {
         </div>
       </header>
 
-      <section className="border-b border-border py-20 sm:py-28">
-        <div className="mx-auto max-w-2xl space-y-6 px-6 text-lg leading-relaxed text-muted sm:px-10">
+      <section className="border-b border-border py-24 sm:py-36">
+        <div className="mx-auto max-w-2xl space-y-7 px-6 text-lg leading-relaxed text-muted sm:px-10">
           <p>
             I started in Electronics & Communication Engineering, which is where I learned to think in systems —
             signal in, signal out, and everything in between has to be understood, not assumed. That habit carried
