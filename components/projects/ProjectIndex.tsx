@@ -2,10 +2,13 @@ import { tier1Projects, tier2Projects, tier3Projects } from '@/data/projects';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { CareerOSFeature } from '@/components/projects/CareerOSFeature';
 import { InstaworkFeature } from '@/components/projects/InstaworkFeature';
+import { OpsIntelFeature } from '@/components/projects/OpsIntelFeature';
 import { ProjectCard } from '@/components/projects/ProjectCard';
 
 export function ProjectIndex() {
   const [careerOS, instawork] = tier1Projects;
+  const opsintel = tier2Projects.find((p) => p.id === 'opsintel');
+  const restTier2 = tier2Projects.filter((p) => p.id !== 'opsintel');
 
   return (
     <section id="work" className="scroll-mt-20 border-b border-border py-24 sm:py-32">
@@ -15,11 +18,12 @@ export function ProjectIndex() {
         <div className="mt-16 space-y-16">
           {careerOS && <CareerOSFeature project={careerOS} />}
           {instawork && <InstaworkFeature project={instawork} />}
+          {opsintel && <OpsIntelFeature project={opsintel} />}
         </div>
 
-        {tier2Projects.length > 0 && (
-          <div className="mt-20 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-            {tier2Projects.map((project) => (
+        {restTier2.length > 0 && (
+          <div className="mt-20 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2">
+            {restTier2.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
