@@ -1,32 +1,50 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
-const NODES = [
-  { key: 'product', label: 'Product', x: 40, y: 150 },
-  { key: 'ai', label: 'AI', x: 220, y: 40 },
-  { key: 'operations', label: 'Operations', x: 220, y: 260 },
-] as const;
+const CENTER = 200;
+const R_OUTER = 168;
+const R_MID = 122;
+const R_INNER = 78;
+const R_SQUARE = 146;
 
-const CENTER = { x: 130, y: 150 };
-const LINE_DURATION = 0.5;
-const LINE_STAGGER = 0.1;
-const LINE_START = 0.15;
+function polar(radius: number, angleDeg: number) {
+  const rad = (angleDeg * Math.PI) / 180;
+  return {
+    x: CENTER + radius * Math.cos(rad),
+    y: CENTER + radius * Math.sin(rad),
+  };
+}
+
+function buildTicks() {
+  const count = 48;
+  const ticks: { x1: number; y1: number; x2: number; y2: number; major: boolean }[] = [];
+  for (let i = 0; i < count; i++) {
+    const angle = (360 / count) * i;
+    const major = i % 12 === 0;
+    const inner = polar(R_OUTER + 6, angle);
+    const outer = polar(R_OUTER + (major ? 22 : 10), angle);
+    ticks.push({ x1: inner.x, y1: inner.y, x2: outer.x, y2: outer.y, major });
+  }
+  return ticks;
+}
+
+const TICKS = buildTicks();
+const INDICATOR = polar(R_INNER, -58);
 
 export function HeroSystemGraph() {
   const ref = useRef<HTMLDivElement>(null);
   const [reduced, setReduced] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
-  const [activeNode, setActiveNode] = useState<string | null>(null);
 
-  const mvX = useMotionValue(0);
-  const mvY = useMotionValue(0);
-  const springX = useSpring(mvX, { stiffness: 60, damping: 20, mass: 0.6 });
-  const springY = useSpring(mvY, { stiffness: 60, damping: 20, mass: 0.6 });
-  const groupX = useTransform(springX, (v) => v);
-  const groupY = useTransform(springY, (v) => v);
+  const tiltX = useMotionValue(0);
+  const tiltY = useMotionValue(0);
+  const springTiltX = useSpring(tiltX, { stiffness: 55, damping: 16, mass: 0.6 });
+  const springTiltY = useSpring(tiltY, { stiffness: 55, damping: 16, mass: 0.6 });
+
+  const ticks = useMemo(() => TICKS, []);
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -45,12 +63,12 @@ export function HeroSystemGraph() {
       const rect = el!.getBoundingClientRect();
       const px = (e.clientX - rect.left) / rect.width - 0.5;
       const py = (e.clientY - rect.top) / rect.height - 0.5;
-      mvX.set(px * 10);
-      mvY.set(py * 10);
+      tiltY.set(px * 7);
+      tiltX.set(py * -7);
     }
     function onLeave() {
-      mvX.set(0);
-      mvY.set(0);
+      tiltX.set(0);
+      tiltY.set(0);
     }
 
     window.addEventListener('pointermove', onMove);
@@ -59,90 +77,61 @@ export function HeroSystemGraph() {
       window.removeEventListener('pointermove', onMove);
       el.removeEventListener('pointerleave', onLeave);
     };
-  }, [reduced, mvX, mvY]);
+  }, [reduced, tiltX, tiltY]);
 
   return (
-    <div ref={ref} className="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden>
-      <motion.svg
-        viewBox="0 0 280 300"
-        className="absolute right-0 top-1/2 h-[26rem] w-[26rem] -translate-y-1/2 translate-x-1/4 opacity-70"
-        style={reduced ? undefined : { x: groupX, y: groupY }}
+    <div
+      ref={ref}
+      className="pointer-events-none absolute inset-y-0 right-[-6%] hidden w-[42rem] items-center lg:flex"
+      style={{ perspective: 1400 }}
+      aria-hidden
+    >
+      <motion.div
+        initial={reduced ? false : { opacity: 0, scale: 0.94 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={reduced ? { duration: 0 } : { duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
+        style={{
+          rotateX: reduced ? 0 : springTiltX,
+          rotateY: reduced ? 0 : springTiltY,
+          transformStyle: 'preserve-3d',
+        }}
+        className="mx-auto h-[36rem] w-[36rem]"
       >
-        <g stroke="#212426" strokeWidth="1" fill="none">
-          {NODES.map((n, i) => (
-            <motion.line
-              key={n.key}
-              x1={CENTER.x}
-              y1={CENTER.y}
-              x2={n.x}
-              y2={n.y}
-              className={activeNode === n.key ? 'stroke-accent/60' : ''}
-              style={{ transition: 'stroke 0.3s ease' }}
-              initial={reduced ? false : { pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 1 }}
-              transition={reduced ? { duration: 0 } : { duration: LINE_DURATION, delay: LINE_START + i * LINE_STAGGER, ease: [0.16, 1, 0.3, 1] }}
+        <svg viewBox="0 0 400 400" className="h-full w-full">
+          <g stroke="#212426" strokeWidth="1" fill="none">
+            <circle cx={CENTER} cy={CENTER} r={R_OUTER} />
+            <circle cx={CENTER} cy={CENTER} r={R_MID} strokeOpacity="0.7" />
+            <circle cx={CENTER} cy={CENTER} r={R_INNER} strokeOpacity="0.9" />
+            <rect
+              x={CENTER - R_SQUARE / 2}
+              y={CENTER - R_SQUARE / 2}
+              width={R_SQUARE}
+              height={R_SQUARE}
+              transform={`rotate(45 ${CENTER} ${CENTER})`}
+              strokeOpacity="0.55"
             />
-          ))}
-        </g>
+            <line x1={CENTER} y1={CENTER - R_INNER} x2={CENTER} y2={CENTER + R_INNER} strokeOpacity="0.4" />
+            <line x1={CENTER - R_INNER} y1={CENTER} x2={CENTER + R_INNER} y2={CENTER} strokeOpacity="0.4" />
+          </g>
 
-        <motion.circle
-          cx={CENTER.x}
-          cy={CENTER.y}
-          r="5"
-          className="fill-accent"
-          initial={reduced ? false : { opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={reduced ? { duration: 0 } : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          style={{ transformOrigin: `${CENTER.x}px ${CENTER.y}px` }}
-        />
-        <motion.text
-          x={CENTER.x}
-          y={CENTER.y + 22}
-          textAnchor="middle"
-          className="fill-faint font-mono text-[9px] uppercase tracking-widest"
-          initial={reduced ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={reduced ? { duration: 0 } : { duration: 0.3, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          Systems
-        </motion.text>
+          <g stroke="#2c3033" strokeWidth="1">
+            {ticks.map((t, i) => (
+              <line key={i} x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} strokeOpacity={t.major ? 0.9 : 0.35} />
+            ))}
+          </g>
 
-        {NODES.map((n, i) => {
-          const appearAt = LINE_START + i * LINE_STAGGER + LINE_DURATION * 0.7;
-          return (
-            <g
-              key={n.key}
-              className="pointer-events-auto cursor-default"
-              onMouseEnter={() => setActiveNode(n.key)}
-              onMouseLeave={() => setActiveNode(null)}
-            >
-              <motion.circle
-                cx={n.x}
-                cy={n.y}
-                r={activeNode === n.key ? 5 : 3.5}
-                className={activeNode === n.key ? 'fill-accent' : 'fill-border-strong'}
-                style={{ transition: 'r 0.25s ease, fill 0.25s ease', transformOrigin: `${n.x}px ${n.y}px` }}
-                initial={reduced ? false : { opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={reduced ? { duration: 0 } : { duration: 0.3, delay: appearAt, ease: [0.16, 1, 0.3, 1] }}
-              />
-              <motion.text
-                x={n.x}
-                y={n.y - 14}
-                textAnchor="middle"
-                className={`font-mono text-[10px] uppercase tracking-widest transition-colors duration-300 ${
-                  activeNode === n.key ? 'fill-ink' : 'fill-faint'
-                }`}
-                initial={reduced ? false : { opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={reduced ? { duration: 0 } : { duration: 0.3, delay: appearAt, ease: [0.16, 1, 0.3, 1] }}
-              >
-                {n.label}
-              </motion.text>
-            </g>
-          );
-        })}
-      </motion.svg>
+          <circle cx={CENTER} cy={CENTER} r="2.5" className="fill-border-strong" />
+
+          <motion.circle
+            cx={INDICATOR.x}
+            cy={INDICATOR.y}
+            r="3"
+            className="fill-accent"
+            animate={reduced ? undefined : { opacity: [0.5, 1, 0.5] }}
+            transition={reduced ? undefined : { duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </svg>
+      </motion.div>
     </div>
   );
 }

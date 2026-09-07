@@ -13,11 +13,11 @@ interface ButtonProps {
 
 export function Button({ href, children, variant = 'primary', showArrow = false, external = false, className }: ButtonProps) {
   const base =
-    'group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-tight transition-all duration-300 ease-editorial focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
+    'group inline-flex items-center gap-2 rounded-sm px-5 py-3 text-sm font-medium tracking-tight transition-all duration-300 ease-editorial focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
   const styles =
     variant === 'primary'
-      ? 'bg-accent text-bg hover:bg-ink'
-      : 'border border-border-strong text-ink hover:border-accent hover:text-accent';
+      ? 'bg-ink text-bg hover:bg-white'
+      : 'border border-border-strong text-ink hover:border-ink';
 
   const content = (
     <>
