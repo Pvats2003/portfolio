@@ -39,7 +39,7 @@ export function CaseStudyNav({ sections }: { sections: { id: string; heading: st
             href={`#${s.id}`}
             onFocus={(e) => e.currentTarget.scrollIntoView({ block: 'nearest', inline: 'nearest' })}
             className={`whitespace-nowrap font-mono text-xs uppercase tracking-wider transition-colors ${
-              activeId === s.id ? 'text-accent' : 'text-faint hover:text-muted'
+              activeId === s.id ? 'text-ink' : 'text-faint hover:text-muted'
             }`}
           >
             {s.heading}

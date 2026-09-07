@@ -36,9 +36,9 @@ export function ExperienceTimeline() {
 
         <div className="mt-16">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-faint">Leadership</p>
-          <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="mt-6 grid grid-cols-1 gap-x-12 gap-y-8 border-t border-border pt-8 sm:grid-cols-2">
             {leadership.map((item) => (
-              <div key={item.title} className="rounded-lg border border-border p-6">
+              <div key={item.title}>
                 <p className="font-mono text-xs text-faint">{item.period}</p>
                 <h4 className="mt-2 text-lg font-semibold text-ink">{item.title}</h4>
                 <p className="mt-1 text-sm text-muted">{item.org}</p>

@@ -12,7 +12,7 @@ export default function AboutPage() {
     <>
       <header className="border-b border-border pb-16 pt-32 sm:pt-40">
         <div className="mx-auto max-w-content px-6 sm:px-10">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">About</p>
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-faint">About</p>
           <h1 className="mt-4 max-w-3xl text-display-lg font-semibold text-ink">Technology meets reality.</h1>
         </div>
       </header>

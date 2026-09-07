@@ -20,7 +20,7 @@ function Chrome({ children }: { children: React.ReactNode }) {
 }
 
 function Bar({ w, tone = 'muted' }: { w: string; tone?: 'muted' | 'accent' | 'ink' }) {
-  const color = tone === 'accent' ? 'bg-accent/70' : tone === 'ink' ? 'bg-ink/40' : 'bg-border-strong';
+  const color = tone === 'accent' ? 'bg-ink/60' : tone === 'ink' ? 'bg-ink/40' : 'bg-border-strong';
   return <span className={`block h-1.5 rounded-full ${color}`} style={{ width: w }} />;
 }
 
@@ -42,7 +42,7 @@ function CareerOSMockup() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.4, delay: ci * 0.09, ease: [0.16, 1, 0.3, 1] }}
-            className={col.flagged ? 'rounded-md border border-accent/40 bg-accent/5 p-2' : 'rounded-md border border-border p-2'}
+            className={col.flagged ? 'rounded-md border border-border-strong bg-surface p-2' : 'rounded-md border border-border p-2'}
           >
             <p className="font-mono text-[9px] uppercase tracking-wider text-faint sm:text-[10px]">{col.label}</p>
             <div className="mt-2 space-y-1.5">
@@ -61,13 +61,13 @@ function CareerOSMockup() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.4, delay: columns.length * 0.09, ease: [0.16, 1, 0.3, 1] }}
-        className="mt-4 flex items-center gap-2 rounded-md border border-accent/30 bg-accent/5 px-3 py-2"
+        className="mt-4 flex items-center gap-2 rounded-md border border-border-strong bg-surface px-3 py-2"
       >
         <span className="relative flex h-1.5 w-1.5 shrink-0">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60 motion-reduce:hidden" />
-          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ink opacity-40 motion-reduce:hidden" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-ink" />
         </span>
-        <span className="font-mono text-[10px] uppercase tracking-wider text-accent">Human review required — salary unverified</span>
+        <span className="font-mono text-[10px] uppercase tracking-wider text-ink">Human review required — salary unverified</span>
       </motion.div>
     </Chrome>
   );
@@ -97,8 +97,8 @@ function CommandCenterMockup() {
       </div>
       <div className="mt-4 flex items-center gap-2">
         <span className="relative flex h-1.5 w-1.5">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
-          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ink opacity-40" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-ink" />
         </span>
         <span className="font-mono text-[10px] uppercase tracking-wider text-faint">Live · polling every 30s</span>
       </div>
@@ -122,7 +122,7 @@ function OpsIntelMockup() {
         </div>
         <div>
           <p className="font-mono text-[10px] uppercase tracking-wider text-faint">Structured record</p>
-          <div className="mt-2 space-y-1.5 rounded-md border border-accent/30 bg-accent/5 p-3">
+          <div className="mt-2 space-y-1.5 rounded-md border border-border-strong bg-surface p-3">
             {['site', 'status', 'blocker', 'timestamp'].map((field) => (
               <div key={field} className="flex items-center justify-between gap-3">
                 <span className="font-mono text-[10px] text-faint">{field}</span>
@@ -173,11 +173,11 @@ function AuditAIMockup() {
             ))}
           </div>
         </div>
-        <div className="rounded-md border border-accent/30 bg-accent/5 p-3 sm:col-span-1">
-          <p className="font-mono text-[9px] uppercase tracking-wider text-accent">Flagged</p>
+        <div className="rounded-md border border-border-strong bg-surface p-3 sm:col-span-1">
+          <p className="font-mono text-[9px] uppercase tracking-wider text-ink">Flagged</p>
           <div className="mt-2 space-y-2">
             {[0, 1].map((i) => (
-              <div key={i} className="rounded border border-accent/30 p-1.5">
+              <div key={i} className="rounded border border-border-strong p-1.5">
                 <Bar w={`${70 - i * 10}%`} tone="accent" />
               </div>
             ))}
@@ -225,7 +225,7 @@ function Lightbox({ image, onClose }: { image: EvidenceImage; onClose: () => voi
         type="button"
         onClick={onClose}
         aria-label="Close"
-        className="absolute right-6 top-6 rounded border border-border p-2 text-ink transition-colors hover:border-accent hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        className="absolute right-6 top-6 rounded border border-border p-2 text-ink transition-colors hover:border-border-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
         <X className="h-5 w-5" />
       </button>
@@ -260,7 +260,7 @@ export function VisualEvidence({ kind, images, label, notes }: VisualEvidencePro
       {hasRealImages ? (
         <div>
           <div className="mb-2.5 flex items-center gap-2">
-            <span className="rounded border border-accent/40 bg-accent/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-accent">
+            <span className="rounded border border-border-strong bg-surface px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-ink">
               {label ?? 'Live product'}
             </span>
           </div>

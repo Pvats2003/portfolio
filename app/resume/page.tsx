@@ -36,7 +36,7 @@ export default function ResumePage() {
         </div>
 
         <section className="mt-12">
-          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Summary</h2>
+          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-faint">Summary</h2>
           <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">
             Product-minded operator bridging field operations and AI/robotics data infrastructure — seeking Associate
             Product Manager / Founder’s Office roles where technical fluency and hands-on ops execution can drive
@@ -45,7 +45,7 @@ export default function ResumePage() {
         </section>
 
         <section className="mt-12">
-          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Experience</h2>
+          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-faint">Experience</h2>
           <div className="mt-5 space-y-8">
             {experience.map((item) => (
               <div key={item.title}>
@@ -71,7 +71,7 @@ export default function ResumePage() {
         </section>
 
         <section className="mt-12">
-          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Selected projects</h2>
+          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-faint">Selected projects</h2>
           <div className="mt-5 space-y-5">
             {projects
               .filter((p) => p.tier <= 2)
@@ -88,7 +88,7 @@ export default function ResumePage() {
         </section>
 
         <section className="mt-12">
-          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Education</h2>
+          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-faint">Education</h2>
           <div className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
             <div className="min-w-0 flex-1">
               <h3 className="text-base font-semibold text-ink">{education.degree}</h3>
@@ -102,7 +102,7 @@ export default function ResumePage() {
         </section>
 
         <section className="mt-12">
-          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Skills</h2>
+          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-faint">Skills</h2>
           <div className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2">
             {skillClusters.map((cluster) => (
               <div key={cluster.label}>
@@ -114,7 +114,7 @@ export default function ResumePage() {
         </section>
 
         <section className="mt-12">
-          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Leadership</h2>
+          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-faint">Leadership</h2>
           <div className="mt-5 space-y-4">
             {leadership.map((item) => (
               <div key={item.title} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">

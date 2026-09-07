@@ -9,7 +9,7 @@ export function HowIWork() {
         <div className="mt-14 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-5">
           {howIWork.map((step) => (
             <div key={step.index} className="border-t border-border pt-5">
-              <span className="font-mono text-xs text-accent">{step.index}</span>
+              <span className="font-mono text-xs text-faint">{step.index}</span>
               <p className="mt-2 text-lg font-medium text-ink">{step.label}</p>
               <p className="mt-2 text-sm leading-relaxed text-muted">{step.detail}</p>
             </div>

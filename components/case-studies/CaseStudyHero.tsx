@@ -6,24 +6,13 @@ import { MetricStrip } from '@/components/ui/Metric';
 import { RoleBlock } from '@/components/case-studies/RoleBlock';
 import { Button } from '@/components/ui/Button';
 
-const MOTIF_CLASS: Record<'system' | 'grid', string> = {
-  system: 'bg-dot-pattern opacity-50',
-  grid: 'bg-grid-pattern opacity-40',
-};
-
 export function CaseStudyHero({ project }: { project: ProjectData }) {
   return (
     <header className="relative overflow-hidden border-b border-border bg-surface pb-14 pt-32 sm:pt-40">
-      {project.heroMotif && (
-        <div
-          className={`pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent)] ${MOTIF_CLASS[project.heroMotif]}`}
-          aria-hidden
-        />
-      )}
       <div className="relative mx-auto max-w-content px-6 sm:px-10">
         <Link
           href="/#work"
-          className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-muted transition-colors hover:text-accent"
+          className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-muted transition-colors hover:text-ink"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           Selected work

@@ -9,7 +9,7 @@ export function FeaturedProject({ project }: { project: ProjectData }) {
   return (
     <Link
       href={href}
-      className="group block border-t border-border pt-8 transition-colors duration-300 ease-editorial hover:border-accent/40 sm:pt-10"
+      className="group block border-t border-border pt-8 transition-colors duration-300 ease-editorial hover:border-border-strong sm:pt-10"
     >
       <div className="flex items-center justify-between gap-4">
         <span className="font-mono text-4xl leading-none text-faint opacity-50 sm:text-5xl">{project.index}</span>
@@ -19,7 +19,7 @@ export function FeaturedProject({ project }: { project: ProjectData }) {
       </div>
 
       {project.tagline && (
-        <p className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-accent">{project.tagline}</p>
+        <p className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-faint">{project.tagline}</p>
       )}
 
       <div className="mt-3 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
@@ -27,7 +27,7 @@ export function FeaturedProject({ project }: { project: ProjectData }) {
           <h3 className="text-2xl font-semibold tracking-tight text-ink sm:text-4xl">{project.title}</h3>
           <p className="mt-3 text-lg text-muted">{project.subtitle}</p>
         </div>
-        <span className="flex shrink-0 items-center gap-2 font-mono text-xs uppercase tracking-wider text-ink transition-colors group-hover:text-accent">
+        <span className="flex shrink-0 items-center gap-2 font-mono text-xs uppercase tracking-wider text-ink transition-colors group-hover:text-muted">
           View case study
           <ArrowUpRight className="h-4 w-4 transition-transform duration-300 ease-editorial group-hover:translate-x-1 group-hover:-translate-y-1" />
         </span>

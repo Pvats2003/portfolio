@@ -22,14 +22,14 @@ export function ArchitectureDiagram({ data }: { data: ArchitectureDiagramData })
               onBlur={() => setActive(null)}
               className="w-full rounded-md border px-4 py-3.5 text-left transition-colors duration-300 ease-editorial focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:px-5"
               style={{
-                borderColor: active === i ? 'var(--accent-border, #c8ff4d)' : '#212426',
-                backgroundColor: active === i ? 'rgba(200,255,77,0.06)' : 'transparent',
+                borderColor: active === i ? '#4a4e51' : '#212426',
+                backgroundColor: active === i ? 'rgba(242,240,234,0.04)' : 'transparent',
               }}
             >
               <div className="flex items-center justify-between gap-4">
                 <span
                   className={`font-mono text-[11px] uppercase tracking-wider sm:text-xs ${
-                    active === i ? 'text-accent' : 'text-ink'
+                    active === i ? 'text-ink' : 'text-muted'
                   }`}
                 >
                   {String(i + 1).padStart(2, '0')} · {stage.label}

@@ -25,10 +25,10 @@ export function CaseStudyPage({ project }: { project: ProjectData }) {
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-faint">Next</p>
           {next.caseStudyRoute ? (
             <Link href={next.caseStudyRoute} className="group mt-3 inline-flex items-baseline gap-4">
-              <span className="text-3xl font-semibold text-ink transition-colors group-hover:text-accent sm:text-4xl">
+              <span className="text-3xl font-semibold text-ink transition-colors group-hover:text-muted sm:text-4xl">
                 {next.title}
               </span>
-              <ArrowRight className="h-6 w-6 text-faint transition-transform duration-300 ease-editorial group-hover:translate-x-1 group-hover:text-accent" />
+              <ArrowRight className="h-6 w-6 text-faint transition-transform duration-300 ease-editorial group-hover:translate-x-1 group-hover:text-muted" />
             </Link>
           ) : null}
         </div>

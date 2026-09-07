@@ -40,7 +40,7 @@ export function Navigation() {
           {[...navLinks, { label: 'Contact', href: '/#contact' }].map((link) => (
             <Link key={link.label} href={link.href} className="group relative py-1 text-[13px] text-muted transition-colors hover:text-ink">
               {link.label}
-              <span className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-accent transition-transform duration-300 ease-editorial group-hover:scale-x-100" />
+              <span className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-ink transition-transform duration-300 ease-editorial group-hover:scale-x-100" />
             </Link>
           ))}
           <StatusDot label={site.status} className="ml-3" />
