@@ -25,7 +25,7 @@ export function HeroArtwork() {
       <div className="animate-ambient-drift absolute inset-0 z-10 opacity-[0.15] mix-blend-screen [background:radial-gradient(38%_30%_at_58%_45%,rgba(242,240,234,0.2),transparent_72%)]" />
 
       <Image
-        src="/hero/artwork.png"
+        src="/hero/artwork.webp"
         alt=""
         fill
         priority
