@@ -3,7 +3,8 @@ export const site = {
   role: 'Product-minded AI Operator · Product Builder · Automation',
   eyebrow: 'Product × AI × Operations',
   headline: 'I build systems that turn messy problems into intelligent products.',
-  supporting: 'Product-minded operator building AI products, automation systems, and operational infrastructure.',
+  supporting:
+    'From real-world operations to AI-powered systems, I design, build, and scale products that create measurable impact.',
   secondary:
     'From robotics data operations to autonomous job-search systems, I work across the full loop — problem discovery, product thinking, system design, building, shipping, and iteration.',
   statement: 'I build systems that turn messy problems into intelligent products.',

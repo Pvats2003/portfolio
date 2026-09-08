@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { HeroArtwork } from '@/components/sections/HeroArtwork';
-import { site } from '@/data/site';
+import { site, proofPoints } from '@/data/site';
 
 export function Hero() {
   return (
@@ -46,10 +46,9 @@ export function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 max-w-xs space-y-3"
+          className="mt-10 max-w-sm"
         >
           <p className="text-sm leading-relaxed text-muted/90">{site.supporting}</p>
-          <p className="text-sm leading-relaxed text-faint">{site.secondary}</p>
         </motion.div>
 
         <motion.div
@@ -64,6 +63,32 @@ export function Hero() {
           <Button href="/resume" variant="secondary">
             View resume
           </Button>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.46, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-14 flex flex-wrap gap-x-10 gap-y-6"
+        >
+          {proofPoints.map((p) => (
+            <div key={p.label}>
+              <p className="font-mono text-2xl font-semibold text-ink sm:text-3xl">{p.value}</p>
+              <p className="mt-1 max-w-[9rem] text-xs text-faint">{p.label}</p>
+            </div>
+          ))}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-14 hidden items-center gap-3 lg:flex"
+        >
+          <span className="flex h-6 w-6 items-center justify-center rounded-full border border-border-strong">
+            <span className="h-1.5 w-1.5 rounded-full bg-faint" />
+          </span>
+          <span className="font-mono text-xs uppercase tracking-wider text-faint">Scroll to explore</span>
         </motion.div>
       </div>
     </section>
